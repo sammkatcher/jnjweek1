@@ -47,7 +47,7 @@ exp_smoothing <- HoltWinters(selected_df[,2], beta=FALSE, gamma=FALSE)
 forecast_hw <- forecast.HoltWinters(exp_smoothing, h = 12)
 plot.forecast(forecast_hw)
 
-# Sum of Squared Residuals
+# Sum of Squared Residuals, pick the best by hand
 SSE_arima <- sum((arima$residuals)^2)
 SSE_linear <- sum((linear$residuals)^2)
 SSE_exp_smoothing <- exp_smoothing$SSE
@@ -56,7 +56,7 @@ SSE_linear
 SSE_exp_smoothing
 
 
-# start of test data
+# predict one year
 test_data <- data.frame(Date = seq(as.Date("2016/3/1"), as.Date("2017/2/1"), "months"))
 test_data$predict <- NA
 test_data$predict <- predict(arima, newdata = test_data$Date)
@@ -69,10 +69,20 @@ lines(test_data$Date, test_data$predict,col="green")
 names(test_data) <- c("Date", column)
 old_and_predicted <- rbind(selected_df, test_data)
 
-plot(old_and_predicted$Date, old_and_predicted[,2],xlab="Date",ylab="Variable of Choice", col = ifelse((old_and_predicted$Date) > 2016,'black','red'), type = "l")
+plot(old_and_predicted$Date, old_and_predicted[,2],xlab="Date",ylab="Variable of Choice", 
+     col = ifelse((old_and_predicted$Date < as.Date("2016/3/1")),'black','red'), type = 'b')
 
 
+# all below this is practice/exploration
+old_and_predicted$old <- NA
+old_and_predicted$old[1:74,] <- old_and_predicted[1:74,2]
 plot(test_data, type = "l")
 
+library(ggplot2)
+ggplot(selected_df) +
+  geom_line(data = selected_df, aes(Date, selected_df[,2])) 
+   geom_line(data = test_data, aes(Date, test_data[,2]), colour = 'red', size = 3)
 
+ggplot(old_and_predicted) + 
+  geom_line(data = old_and_predicted, aes(Date, old_and_predicted[,2]))
 
