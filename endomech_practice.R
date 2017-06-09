@@ -36,13 +36,33 @@ summary(linear)
 # arima model
 install.packages('forecast')
 library('forecast')
-arima <- auto.arima(selected_df$Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH)
-?arima
-arima(selected_df$Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH, order = c(1,0,0))
-arima(selected_df$Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH, 
-      order = c(1,1,0))
-m1$residuals
-predict
+arima_auto_test <- auto.arima(selected_df[,2], max.P = 10, max.Q = 10)
+summary(arima_auto_test)
+arima <- arima(selected_df$Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH, order = c(1, 0, 5))
+arima_forecast <- forecast.Arima(arima, h = 12)
+plot.forecast(arima_forecast)
+summary(arima)
+
+# exponential smoothing
+install.packages("TTR")
+library("TTR")
+exp_smoothing <- HoltWinters(selected_df$Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH,
+                             beta=FALSE, gamma=FALSE)
+forecast_hw <- forecast.HoltWinters(exp_smoothing, h = 12)
+plot.forecast(forecast_hw)
+
+# Sum of Squared Residuals
+SSE_arima <- sum((arima$residuals)^2)
+SSE_linear <- sum((linear$residuals)^2)
+SSE_exp_smoothing <- exp_smoothing$SSE
+SSE_arima
+SSE_linear
+SSE_exp_smoothing
+
+# start of test data
+test_data <- data.frame(seq(as.Date("2016/11/1"), as.Date("2017/10/1"), "months"))
+test_data
+
 ## Notes from talking:
 ## Column variable, run the script for any column
 ## figure out rows with NAs
