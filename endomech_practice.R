@@ -6,6 +6,8 @@ head(names(endomech))
 str(endomech)
 
 # making a variable column and then a dataframe with that column and Date
+#### readline()
+#### https://stackoverflow.com/questions/12550677/in-r-is-there-some-function-like-raw-input-in-python
 column <- "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH"
 selected_df <- data.frame(endomech$Date, endomech[column])
 
