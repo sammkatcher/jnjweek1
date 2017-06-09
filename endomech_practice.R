@@ -29,8 +29,8 @@ selected_df$endomech.Date <- as.Date(selected_df$endomech.Date
 
 plot(selected_df)
 
-#m1 <- lm(selected_df$endomech.Date ~ selected_df[,2])
-#summary(m1) 
+m1 <- lm(selected_df[,2] ~ selected_df$endomech.Date)
+summary(m1) 
 ## Notes from talking:
 ## Column variable, run the script for any column
 ## figure out rows with NAs
