@@ -22,15 +22,27 @@ mean(non_na_selected[1:nrow(non_na_selected),2])
 
 # changing all the NAs to the calculated mean
 selected_df[is.na(selected_df)] <- mean(non_na_selected[1:nrow(non_na_selected),2])
-
+selected_df <- selected_df[1:74,]
 # change date column from factor variable to an actual graphable date
 selected_df$endomech.Date <- as.Date(selected_df$endomech.Date
                                           , format = "%m/%d/%Y")
 
-plot(selected_df)
+plot(selected_df, type = "l")
 
-m1 <- lm(selected_df[,2] ~ selected_df$endomech.Date)
-summary(m1) 
+# linear model
+linear <- lm(selected_df[,2] ~ selected_df$endomech.Date)
+summary(linear) 
+
+# arima model
+install.packages('forecast')
+library('forecast')
+arima <- auto.arima(selected_df$Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH)
+?arima
+arima(selected_df$Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH, order = c(1,0,0))
+arima(selected_df$Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH, 
+      order = c(1,1,0))
+m1$residuals
+predict
 ## Notes from talking:
 ## Column variable, run the script for any column
 ## figure out rows with NAs
