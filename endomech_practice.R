@@ -69,7 +69,7 @@ lines(test_data$Date, test_data$predict,col="green")
 names(test_data) <- c("Date", "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH")
 old_and_predicted <- rbind(selected_df, test_data)
 
-plot(old_and_predicted$Date, old_and_predicted[,2],xlab="Date",ylab="Variable of Choice", col = ifelse(x > 2016,'black','red'))
+plot(old_and_predicted$Date, old_and_predicted[,2],xlab="Date",ylab="Variable of Choice", col = ifelse((old_and_predicted$Date) > 2016,'black','red'), type = "l")
 
 
 plot(test_data, type = "l")
