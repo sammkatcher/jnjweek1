@@ -1,4 +1,7 @@
 endomech <- read.csv("endomech.csv", header = TRUE)
+## Load in ggplot2
+install.packages("ggplot2")
+install.packages("plotly")
 head(endomech)
 
 ## How to access names
