@@ -9,8 +9,8 @@ head(names(endomech))
 str(endomech)
 
 # making a variable column and then a dataframe with that column and Date
+# Working example: ## column <- "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH"
 column <- readline('Enter column name: ')
-## column <- "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH"
 
 selected_df <- data.frame(endomech$Date, endomech[column])
 
@@ -62,11 +62,11 @@ test_data$predict <- NA
 test_data$predict <- predict(arima, newdata = test_data$Date)
 test_data
 
-names(selected_df) <- c("Date", "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH")
+names(selected_df) <- c("Date", column)
 plot(selected_df$Date, selected_df[,2],type="l")  
 ?append
 lines(test_data$Date, test_data$predict,col="green")
-names(test_data) <- c("Date", "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH")
+names(test_data) <- c("Date", column)
 old_and_predicted <- rbind(selected_df, test_data)
 
 plot(old_and_predicted$Date, old_and_predicted[,2],xlab="Date",ylab="Variable of Choice", col = ifelse(x > 2016,'black','red'))
