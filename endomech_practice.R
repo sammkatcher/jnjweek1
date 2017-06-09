@@ -13,10 +13,11 @@ selected_df <- data.frame(endomech$Date, endomech[column])
 
 # getting a mean from the 'non NA' data in the column
 non_na_selected <- subset(selected_df, !is.na(selected_df[column]))
-mean(non_na_selected[2:nrow(non_na_selected),2])
+non_na_selected
+mean(non_na_selected[1:nrow(non_na_selected),2])
 
 # changing all the NAs to the calculated mean
-selected_df[is.na(selected_df)] <- mean(non_na_selected[2:nrow(non_na_selected),2])
+selected_df[is.na(selected_df)] <- mean(non_na_selected[1:nrow(non_na_selected),2])
 
 plot(selected_df)
 
