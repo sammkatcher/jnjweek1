@@ -9,10 +9,9 @@ head(names(endomech))
 str(endomech)
 
 # making a variable column and then a dataframe with that column and Date
-#### readline()
-#### https://stackoverflow.com/questions/12550677/in-r-is-there-some-function-like-raw-input-in-python
-column <- "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH"
-col <- endomech$Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH
+column <- readline('Enter column name: ')
+## column <- "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH"
+
 selected_df <- data.frame(endomech$Date, endomech[column])
 
 # getting a mean from the 'non NA' data in the column
@@ -36,18 +35,15 @@ summary(linear)
 # arima model
 install.packages('forecast')
 library('forecast')
-arima_auto_test <- auto.arima(selected_df[,2], max.P = 10, max.Q = 10)
-summary(arima_auto_test)
-arima <- arima(selected_df$Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH, order = c(1, 0, 5))
-arima_forecast <- forecast.Arima(arima, h = 12)
+arima_auto <- auto.arima(selected_df[,2], max.P = 10, max.Q = 10)
+arima_forecast <- forecast.Arima(arima_auto, h = 12)
 plot.forecast(arima_forecast)
 summary(arima)
 
 # exponential smoothing
 install.packages("TTR")
 library("TTR")
-exp_smoothing <- HoltWinters(selected_df$Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH,
-                             beta=FALSE, gamma=FALSE)
+exp_smoothing <- HoltWinters(selected_df[,2], beta=FALSE, gamma=FALSE)
 forecast_hw <- forecast.HoltWinters(exp_smoothing, h = 12)
 plot.forecast(forecast_hw)
 
@@ -59,13 +55,24 @@ SSE_arima
 SSE_linear
 SSE_exp_smoothing
 
+
 # start of test data
-test_data <- data.frame(seq(as.Date("2016/11/1"), as.Date("2017/10/1"), "months"))
+test_data <- data.frame(Date = seq(as.Date("2016/3/1"), as.Date("2017/2/1"), "months"))
+test_data$predict <- NA
+test_data$predict <- predict(arima, newdata = test_data$Date)
 test_data
 
-## Notes from talking:
-## Column variable, run the script for any column
-## figure out rows with NAs
-## figure out how to clean up
-## best fit graph: each one needs a different "best fit"
-## index into the summary to get the correlation coefficient to figure out the best one
+names(selected_df) <- c("Date", "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH")
+plot(selected_df$Date, selected_df[,2],type="l")  
+?append
+lines(test_data$Date, test_data$predict,col="green")
+names(test_data) <- c("Date", "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH")
+old_and_predicted <- rbind(selected_df, test_data)
+
+plot(old_and_predicted$Date, old_and_predicted[,2],xlab="Date",ylab="Variable of Choice", col = ifelse(x > 2016,'black','red'))
+
+
+plot(test_data, type = "l")
+
+
+
