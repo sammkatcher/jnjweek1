@@ -38,7 +38,7 @@ library('forecast')
 arima_auto <- auto.arima(selected_df[,2], max.P = 10, max.Q = 10)
 arima_forecast <- forecast.Arima(arima_auto, h = 12)
 plot.forecast(arima_forecast)
-summary(arima)
+summary(arima_auto)
 
 # exponential smoothing
 install.packages("TTR")
