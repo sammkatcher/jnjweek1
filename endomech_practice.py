@@ -16,11 +16,6 @@ with open('endomech.csv', newline='') as f:
     for row in reader:
         print(row)
 
-
-## How to access names
-##print head(names(endomech))
-##str(endomech)
-#
 ## making a variable column and then a dataframe with that column and Date
 ## Working example: ## column = "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH"
 column = input('Enter column name: ')
@@ -36,7 +31,7 @@ column = input('Enter column name: ')
 #
 ## changing all the NAs to the calculated mean
 #selected_df[is.na(selected_df)] = mean(non_na_selected[1:nrow(non_na_selected),2])
-#selected_df = selected_df[1:74,]
+##selected_df = selected_df[1:74,]
 #
 ## change date column from factor variable to an actual graphable date
 #selected_df$endomech.Date = as.Date(selected_df$endomech.Date
@@ -51,6 +46,7 @@ column = input('Enter column name: ')
 ## arima model
 #install.packages('forecast')
 #library('forecast')
+
 #arima_auto = auto.arima(selected_df[,2], max.P = 10, max.Q = 10)
 #arima_forecast = forecast.Arima(arima_auto, h = 12)
 #plot.forecast(arima_forecast)
