@@ -4,6 +4,9 @@
 Created on Tue Jun 13 14:23:04 2017
 
 @author: sammkatcher
+
+
+********** We should use matplotlib and numpy to do our calculations
 """
 import csv
 
