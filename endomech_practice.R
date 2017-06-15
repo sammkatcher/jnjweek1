@@ -18,8 +18,9 @@ str(endomech)
 column <- readline('Enter column name: ')
 
 selected_df <- data.frame(endomech$Date, endomech[column])
-test <- as.character(selected_df[,2])
+test <-as.numeric(as.character(selected_df[,2]))
 test1 <- as.numeric(test)
+
 # getting a mean from the 'non NA' data in the column
 non_na_selected <- subset(selected_df, !is.na(selected_df[column]))
 non_na_selected
