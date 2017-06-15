@@ -1,19 +1,25 @@
-endomech <- read.csv("endomech.csv", header = TRUE)
-## Load in ggplot2
-install.packages("ggplot2")
-install.packages("plotly")
+# needed packages
+# install.packages("TTR")
+# install.packages("ggplot2")
+# install.packages("plotly")
+# install.packages('forecast')
+
+#load in data
+endomech <- read.csv("endomech.csv", header = TRUE, strip.white = TRUE)
 head(endomech)
 
 ## How to access names
 head(names(endomech))
-head(str(endomech))
+str(endomech)
 
 # making a variable column and then a dataframe with that column and Date
 # Working example: ## column <- "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH"
+# factor example Circular.Stapler.Circular.Stapler.Ethicon.Circular.Stapler.excl.PPH
 column <- readline('Enter column name: ')
 
 selected_df <- data.frame(endomech$Date, endomech[column])
-
+test <- as.character(selected_df[,2])
+test1 <- as.numeric(test)
 # getting a mean from the 'non NA' data in the column
 non_na_selected <- subset(selected_df, !is.na(selected_df[column]))
 non_na_selected
@@ -34,7 +40,6 @@ linear <- lm(selected_df[,2] ~ selected_df$endomech.Date)
 summary(linear) 
 
 # arima model
-install.packages('forecast')
 library('forecast')
 arima_auto <- auto.arima(selected_df[,2], max.P = 10, max.Q = 10)
 arima_forecast <- forecast.Arima(arima_auto, h = 12)
@@ -42,7 +47,6 @@ plot.forecast(arima_forecast)
 summary(arima_auto)
 
 # exponential smoothing
-install.packages("TTR")
 library("TTR")
 exp_smoothing <- HoltWinters(selected_df[,2], beta=FALSE, gamma=FALSE)
 forecast_hw <- forecast.HoltWinters(exp_smoothing, h = 12)
@@ -75,18 +79,4 @@ old_and_predicted <- rbind(selected_df, test_data)
 plot(old_and_predicted$Date, old_and_predicted[,2],xlab="Date",ylab="Variable of Choice", 
      col = ifelse((old_and_predicted$Date < as.Date("2016/11/1")),'black','red'), type = 'b')
 
-
-#### all below this is practice/exploration
-# old_and_predicted$old <- NA
-# old_and_predicted$old[1:74,] <- old_and_predicted[1:74,2]
-# plot(test_data, type = "l")
-
-# library(ggplot2)
-# ggplot(selected_df) +
-# geom_line(data = selected_df, aes(Date, selected_df[,2])) +
-#   geom_line(data = test_data, aes(Date, test_data[,2]), colour = 'red', size = 3)
-
-# ggplot(old_and_predicted) + 
-#  geom_line(data = old_and_predicted, aes(Date, old_and_predicted[,2]), colour = 
-#              ifelse((old_and_predicted$Date < as.Date("2016/3/1")),'black','red'))
 
