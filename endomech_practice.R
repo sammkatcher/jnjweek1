@@ -17,9 +17,16 @@ str(endomech)
 # factor example Circular.Stapler.Circular.Stapler.Ethicon.Circular.Stapler.excl.PPH
 column <- readline('Enter column name: ')
 
+trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+
+col_name <- quote(names(endomech[column]))
 selected_df <- data.frame(endomech$Date, endomech[column])
-test <- as.character(selected_df[,2])
-test1 <- as.numeric(test)
+trimmed <- trim(selected_df[,2])
+new_col <- as.numeric(gsub(",", "", trimmed))
+selected_df <- data.frame(endomech$Date, col_choice = new_col)
+names(selected_df) <- c("endomech.Date", column)
+
+
 # getting a mean from the 'non NA' data in the column
 non_na_selected <- subset(selected_df, !is.na(selected_df[column]))
 non_na_selected
