@@ -53,6 +53,5 @@ server <- function(input, output){
 shinyApp(ui = ui, server = server)
 
 
-
 ### When you click the button, get choice of scatter plot and line plot
 ### final plot with the red dots for a year out of predicition
