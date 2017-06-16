@@ -5,7 +5,8 @@ library(shiny)
 endomech <- read.csv("endomech.csv", header = TRUE, strip.white = TRUE)
 head(endomech)
 
-
+col_choices <- names(endomech)
+col_choices <- col_choices[2:119]
 
 ui <- fluidPage(
   theme = "bootstrap.css",
@@ -26,17 +27,19 @@ ui <- fluidPage(
     ),
   
   selectInput("col_choice", "Column Choice", col_choices),
-  plotOutput("line_plot")
+  plotOutput("line_plot"),
+  mainPanel(
+    textOutput("text1")
+  )
   )
 
 server <- function(input, output){
-  reactive({
-    trim <- function (x) gsub("^\\s+|\\s+$", "", x)
-    trimmed <- trim(endomech[input$col_choice])
-    new_col <- as.numeric(gsub(",", "", trimmed))
-             })
+  output$text1 <- renderText({ 
+        
+          paste("You have selected this ", input$col_choice)
+     })
   output$line_plot <- renderPlot({
-    plot(as.Date(endomech$Date, format = "%m/%d/%Y"), new_col,
+    plot(as.Date(endomech$Date, format = "%m/%d/%Y"), endomech[eval(input$col_choice)],
          xlab = "Date", ylab = input$col_choice, type = 'l')
   })
 }
