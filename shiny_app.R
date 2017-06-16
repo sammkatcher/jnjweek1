@@ -37,6 +37,9 @@ ui <- fluidPage(
 
   )
 
+
+######################################################
+
 server <- function(input, output){
   output$text1 <- renderText({ 
           paste("You have selected this ", input$col_choice, endomech[input$col_choice])
@@ -47,7 +50,6 @@ server <- function(input, output){
   })
 }
 shinyApp(ui = ui, server = server)
-
 
 
 ### When you click the button, get choice of scatter plot and line plot

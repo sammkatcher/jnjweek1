@@ -58,7 +58,7 @@ ui <- fluidPage(theme = "bootstrap.css",
                 selectInput("col_choice", "Column Choice", col_choices),
                 plotOutput("forecast_plot"),
                 
-                HTML("<img src='jnj-og-logo.jpg'/>")
+                HTML("<img src='data-labs.png'/>")
 )
 
 server <- function(input, output){
@@ -73,3 +73,20 @@ shinyApp(ui = ui, server = server)
 
 ### When you click the button, get choice of scatter plot and line plot
 ### final plot with the red dots for a year out of predicition
+
+
+
+
+
+##############
+# Printing stuff
+# plotHistFunc <- function(x, na.rm = TRUE, ...) {
+#   nm <- names(x)
+#   for (i in seq_along(nm)) {
+#     plots <-ggplot(x,aes_string(x = nm[i])) + geom_histogram(alpha = .5,fill = "dodgerblue")
+#     ggsave(plots,filename=paste("myplot",nm[i],".png",sep=""))
+#   }
+# }
+# 
+# plotHistFunc(df) ## execute function
+
