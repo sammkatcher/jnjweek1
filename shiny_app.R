@@ -1,21 +1,21 @@
-install.packages('Shiny')
+# install.packages('shiny')
 library(shiny)
 
 #load in data
 endomech <- read.csv("endomech.csv", header = TRUE, strip.white = TRUE)
 head(endomech)
+trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 
-col_choices <- names(endomech)
-col_choices <- col_choices[2:119]
+
 ui <- fluidPage(
   h2("Endomech Forecasting"),
                 selectInput("col_choice", "Column Choice", col_choices),
-                plotOutput("forecast_plot")
-                )
+  plotOutput("forecast_plot"))
+
 server <- function(input, output){
   output$forecast_plot <- renderPlot({
-    plot(input$col_choice,
-         as.Date(endomech$Date, format = "%m/%d/%Y"))
+    plot(as.Date(endomech$Date, format = "%m/%d/%Y"), endomech$Circular.Stapler.Circular.Stapler.Ethicon.Circular.Stapler.excl.PPH,
+         xlab = "Date", ylab = input$col_choice, type = 'l')
   })
 }
 shinyApp(ui = ui, server = server)
