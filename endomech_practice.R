@@ -9,7 +9,7 @@ endomech <- read.csv("endomech.csv", header = TRUE, strip.white = TRUE)
 head(endomech)
 
 ## How to access names
-head(names(endomech))
+names(endomech)
 str(endomech)
 
 # making a variable column and then a dataframe with that column and Date
@@ -18,14 +18,18 @@ str(endomech)
 # throws error: Other.Mech.Other.Mech.All.Others.Skin.Stapler
 # throws same error on line 79: Endocutter.60mm.Medtronic.Endo.GIA.Universal
 column <- readline('Enter column name: ')
-# column <- endomech$Circular.Stapler.Circular.Stapler.Ethicon.Circular.Stapler.excl.PPH
+
 
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 
 selected_df <- data.frame(endomech$Date, endomech[column])
 
 trimmed <- trim(selected_df[,2])
-new_col <- as.numeric(gsub(",", "", trimmed))
+trimmed
+no_comma <- gsub(",", "", trimmed)
+no_left_paren <- gsub("\\(", "-", no_comma)
+new_col <- as.numeric(gsub("\\)", "", no_left_paren))
+
 selected_df <- data.frame(endomech$Date, col_choice = new_col)
 names(selected_df) <- c("endomech.Date", column)
 
@@ -34,7 +38,6 @@ non_na_selected <- subset(selected_df, !is.na(selected_df[column]))
 non_na_selected
 mean(non_na_selected[1:nrow(non_na_selected),2])
 
-is.na(selected_df[,2])
 # changing all the NAs to the calculated mean
 selected_df[is.na(selected_df)] <- mean(non_na_selected[1:nrow(non_na_selected),2])
 # selected_df <- selected_df[1:74,]
@@ -78,7 +81,6 @@ best_predict_coef <- ifelse(min_index == 1, assign("best_predict", auto.arima(se
 test_data <- data.frame(Date = seq(as.Date("2016/11/1"), as.Date("2017/10/1"), "months"))
 test_data$predict <- NA
 test_data$predict <- predict(best_predict, newdata = test_data$Date)
-test_data
 names(selected_df) <- c("Date", column)
 plot(selected_df$Date, selected_df[,2],type="l")  
 
