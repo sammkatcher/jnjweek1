@@ -17,8 +17,8 @@ str(endomech)
 # factor example Circular.Stapler.Circular.Stapler.Ethicon.Circular.Stapler.excl.PPH
 # throws error: Other.Mech.Other.Mech.All.Others.Skin.Stapler
 # throws same error on line 79: Endocutter.60mm.Medtronic.Endo.GIA.Universal
-# column <- readline('Enter column name: ')
-column <- endomech$Circular.Stapler.Circular.Stapler.Ethicon.Circular.Stapler.excl.PPH
+column <- readline('Enter column name: ')
+# column <- endomech$Circular.Stapler.Circular.Stapler.Ethicon.Circular.Stapler.excl.PPH
 
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 
