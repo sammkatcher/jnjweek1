@@ -8,8 +8,24 @@ head(endomech)
 
 
 ui <- fluidPage(
-  h2("Endomech Forecasting"),
-                selectInput("col_choice", "Column Choice", col_choices),
+  theme = "bootstrap.css",
+  tags$div(
+    HTML("
+         <style>
+         header{
+         text-align: center;
+         }
+         </style>
+         <header>
+         <h1><strong>Endomech Forecasting</strong></h1>
+         <h2> Week 1 Data Science Project </h2>
+         <br/>
+         <h4> Rory O'Donnell, Alexandria Geise, and Samm Katcher </h4>
+         <br/>
+         </header>")
+    ),
+  
+  selectInput("col_choice", "Column Choice", col_choices),
   plotOutput("line_plot")
   )
 
