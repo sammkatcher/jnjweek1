@@ -17,7 +17,8 @@ str(endomech)
 # factor example Circular.Stapler.Circular.Stapler.Ethicon.Circular.Stapler.excl.PPH
 # throws error: Other.Mech.Other.Mech.All.Others.Skin.Stapler
 # throws same error on line 79: Endocutter.60mm.Medtronic.Endo.GIA.Universal
-column <- readline('Enter column name: ')
+# column <- readline('Enter column name: ')
+column <- endomech$Circular.Stapler.Circular.Stapler.Ethicon.Circular.Stapler.excl.PPH
 
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 
@@ -34,6 +35,7 @@ non_na_selected <- subset(selected_df, !is.na(selected_df[column]))
 non_na_selected
 mean(non_na_selected[1:nrow(non_na_selected),2])
 
+is.na(selected_df[,2])
 # changing all the NAs to the calculated mean
 selected_df[is.na(selected_df)] <- mean(non_na_selected[1:nrow(non_na_selected),2])
 # selected_df <- selected_df[1:74,]
@@ -45,8 +47,8 @@ selected_df$endomech.Date <- as.Date(selected_df$endomech.Date
 plot(selected_df, type = "l")
 
 # linear model
-linear <- lm(selected_df[,2] ~ selected_df$endomech.Date)
-summary(linear) 
+#linear <- lm(selected_df[,2] ~ selected_df$endomech.Date)
+#summary(linear) 
 
 # arima model
 library('forecast')
@@ -63,15 +65,15 @@ plot.forecast(forecast_hw)
 
 # Sum of Squared Residuals, pick the best by hand
 SSE_arima <- sum((arima_auto$residuals)^2)
-SSE_linear <- sum((linear$residuals)^2)
+#SSE_linear <- sum((linear$residuals)^2)
 SSE_exp_smoothing <- exp_smoothing$SSE
 
 
-SSE_vec <- c(SSE_arima, SSE_linear, SSE_exp_smoothing)
+SSE_vec <- c(SSE_arima, SSE_exp_smoothing) #SSE_linear
 min_index <- which.min(SSE_vec)
 best_predict_coef <- ifelse(min_index == 1, assign("best_predict", auto.arima(selected_df[,2], max.P = 10, max.Q = 10)), 
-                       ifelse(min_index == 2, assign("best_predict", lm(selected_df[,2] ~ selected_df$endomech.Date)), 
-                              assign("best_predict", HoltWinters(selected_df[,2], beta=FALSE, gamma=FALSE))))
+                       #ifelse(min_index == 2, assign("best_predict", lm(selected_df[,2] ~ selected_df$endomech.Date)), 
+                              assign("best_predict", HoltWinters(selected_df[,2], beta=FALSE, gamma=FALSE)))
 
 # predict one year
 test_data <- data.frame(Date = seq(as.Date("2016/11/1"), as.Date("2017/10/1"), "months"))

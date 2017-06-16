@@ -39,11 +39,10 @@ ui <- fluidPage(
 
 server <- function(input, output){
   output$text1 <- renderText({ 
-        
-          paste("You have selected this ", input$col_choice)
+          paste("You have selected this ", input$col_choice, endomech[input$col_choice])
      })
   output$line_plot <- renderPlot({
-    plot(as.Date(endomech$Date, format = "%m/%d/%Y"), endomech[eval(input$col_choice)],
+    plot(as.Date(endomech$Date, format = "%m/%d/%Y"), unlist(endomech[input$col_choice]),
          xlab = "Date", ylab = input$col_choice, type = 'l')
   })
 }
