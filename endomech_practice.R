@@ -15,12 +15,14 @@ str(endomech)
 # making a variable column and then a dataframe with that column and Date
 # Working example: ## column <- "Circular.Stapler.Circular.Stapler.Stryker.Sustainability.Circular.Stapler.excl.PPH"
 # factor example Circular.Stapler.Circular.Stapler.Ethicon.Circular.Stapler.excl.PPH
+# throws error: Other.Mech.Other.Mech.All.Others.Skin.Stapler
+# throws same error on line 79: Endocutter.60mm.Medtronic.Endo.GIA.Universal
 column <- readline('Enter column name: ')
 
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 
-col_name <- quote(names(endomech[column]))
 selected_df <- data.frame(endomech$Date, endomech[column])
+str(selected_df)
 trimmed <- trim(selected_df[,2])
 new_col <- as.numeric(gsub(",", "", trimmed))
 selected_df <- data.frame(endomech$Date, col_choice = new_col)
@@ -76,7 +78,6 @@ test_data <- data.frame(Date = seq(as.Date("2016/11/1"), as.Date("2017/10/1"), "
 test_data$predict <- NA
 test_data$predict <- predict(best_predict, newdata = test_data$Date)
 test_data
-
 names(selected_df) <- c("Date", column)
 plot(selected_df$Date, selected_df[,2],type="l")  
 
