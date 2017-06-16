@@ -28,9 +28,13 @@ ui <- fluidPage(
   
   selectInput("col_choice", "Column Choice", col_choices),
   plotOutput("line_plot"),
+
   mainPanel(
     textOutput("text1")
-  )
+  ),
+
+  HTML("<img src='data-labs.png'/>")
+
   )
 
 server <- function(input, output){
