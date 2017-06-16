@@ -1,6 +1,10 @@
 install.packages('Shiny')
 library(shiny)
 
+#load in data
+endomech <- read.csv("endomech.csv", header = TRUE, strip.white = TRUE)
+head(endomech)
+
 col_choices <- names(endomech)
 col_choices <- col_choices[2:119]
 ui <- fluidPage("Endomech Forecasting",
