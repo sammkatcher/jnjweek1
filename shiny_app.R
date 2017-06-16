@@ -1,6 +1,10 @@
 install.packages('Shiny')
 library(shiny)
 
+#load in data
+endomech <- read.csv("endomech.csv", header = TRUE, strip.white = TRUE)
+head(endomech)
+
 col_choices <- names(endomech)
 col_choices <- col_choices[2:119]
 ui <- fluidPage(
@@ -15,3 +19,8 @@ server <- function(input, output){
   })
 }
 shinyApp(ui = ui, server = server)
+
+
+
+### When you click the button, get choice of scatter plot and line plot
+### final plot with the red dots for a year out of predicition
