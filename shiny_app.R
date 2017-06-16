@@ -4,7 +4,7 @@ library(shiny)
 #load in data
 endomech <- read.csv("endomech.csv", header = TRUE, strip.white = TRUE)
 head(endomech)
-trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+
 
 
 ui <- fluidPage(
@@ -15,7 +15,9 @@ ui <- fluidPage(
 
 server <- function(input, output){
   reactive({
-    print(endomech[input$col_choice])
+    trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+    trimmed <- trim(endomech[input$col_choice])
+    new_col <- as.numeric(gsub(",", "", trimmed))
              })
   output$line_plot <- renderPlot({
     plot(as.Date(endomech$Date, format = "%m/%d/%Y"), new_col,
