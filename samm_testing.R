@@ -40,13 +40,29 @@ head(endomech)
 col_choices <- names(endomech)
 col_choices <- col_choices[2:119]
 ui <- fluidPage(theme = "bootstrap.css",
-                "Endomech Forecasting",
+                tags$div(
+                  HTML("
+                      <style>
+                        header{
+                          text-align: center;
+                        }
+                      </style>
+                      <header>
+                         <h1><strong>Endomech Forecasting</strong></h1>
+                         <h2> Week 1 Data Science Project </h2>
+                         <br/>
+                         <h4> Rory O'Donnell, Alexandria Geise, and Samm Katcher </h4>
+                         <br/>
+                       </header>")
+                ),
                 selectInput("col_choice", "Column Choice", col_choices),
                 plotOutput("forecast_plot")
+                
 )
+
 server <- function(input, output){
   output$forecast_plot <- renderPlot({
-    plot(endomech$input,
+    plot(endomech$Circular.Stapler.Circular.Stapler.Ethicon.Circular.Stapler.excl.PPH,
          as.Date(endomech$Date, format = "%m/%d/%Y"))
   })
 }
