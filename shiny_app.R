@@ -10,11 +10,15 @@ trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 ui <- fluidPage(
   h2("Endomech Forecasting"),
                 selectInput("col_choice", "Column Choice", col_choices),
-  plotOutput("forecast_plot"))
+  plotOutput("line_plot")
+  )
 
 server <- function(input, output){
-  output$forecast_plot <- renderPlot({
-    plot(as.Date(endomech$Date, format = "%m/%d/%Y"), endomech$Circular.Stapler.Circular.Stapler.Ethicon.Circular.Stapler.excl.PPH,
+  reactive({
+    print(endomech[input$col_choice])
+             })
+  output$line_plot <- renderPlot({
+    plot(as.Date(endomech$Date, format = "%m/%d/%Y"), new_col,
          xlab = "Date", ylab = input$col_choice, type = 'l')
   })
 }
