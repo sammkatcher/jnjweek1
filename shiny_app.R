@@ -27,7 +27,7 @@ ui <- fluidPage(
   
   selectInput("col_choice", "Column Choice", col_choices),
   plotOutput("line_plot"),
-  HTML("<img src='jnj-og-logo.jpg'/>")
+  HTML("<img src='data-labs.png'/>")
   )
 
 server <- function(input, output){
