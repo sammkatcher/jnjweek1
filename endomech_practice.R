@@ -24,7 +24,6 @@ trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 selected_df <- data.frame(endomech$Date, endomech[column])
 
 
->>>>>>> 161aafb514df4dae80cddd78bebb6f71d55f7691
 trimmed <- trim(selected_df[,2])
 new_col <- as.numeric(gsub(",", "", trimmed))
 selected_df <- data.frame(endomech$Date, col_choice = new_col)
