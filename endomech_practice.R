@@ -22,12 +22,13 @@ column <- readline('Enter column name: ')
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 
 selected_df <- data.frame(endomech$Date, endomech[column])
-str(selected_df)
+
+
+>>>>>>> 161aafb514df4dae80cddd78bebb6f71d55f7691
 trimmed <- trim(selected_df[,2])
 new_col <- as.numeric(gsub(",", "", trimmed))
 selected_df <- data.frame(endomech$Date, col_choice = new_col)
 names(selected_df) <- c("endomech.Date", column)
-
 
 # getting a mean from the 'non NA' data in the column
 non_na_selected <- subset(selected_df, !is.na(selected_df[column]))
