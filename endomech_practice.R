@@ -23,7 +23,6 @@ trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 
 selected_df <- data.frame(endomech$Date, endomech[column])
 
-
 trimmed <- trim(selected_df[,2])
 new_col <- as.numeric(gsub(",", "", trimmed))
 selected_df <- data.frame(endomech$Date, col_choice = new_col)
