@@ -56,8 +56,9 @@ ui <- fluidPage(theme = "bootstrap.css",
                        </header>")
                 ),
                 selectInput("col_choice", "Column Choice", col_choices),
-                plotOutput("forecast_plot")
+                plotOutput("forecast_plot"),
                 
+                HTML("<img src='jnj-og-logo.jpg'/>")
 )
 
 server <- function(input, output){
